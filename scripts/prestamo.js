@@ -1,33 +1,54 @@
-function gen_table(){
-    document.getElementById("tab").innerHTML="";
-    let n=Number(document.getElementById("capital").value);
-    let n2=Number(document.getElementById("couta").value);
-    let n3=Number(document.getElementById("interes").value);
-    if(n>0){   
-        for(i=1;i<=n2;i++){
-            ca=n/n2;
-            d1=ca.toFixed(2);
-            i2=((n*n3)/100)/n2;
-            d2=i2.toFixed(2);
-            r=ca+i2;
-            d3=r.toFixed(2);
-            document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
-                    `<tr>
-                        <td> ${i}</td>
-                        <td> ${d1}</td>
-                        <td> ${d2}</td>
-                        <td> ${d3}</td>
-                    </tr>`;
+const gen_table = () => {
+    document.getElementById("tab").innerHTML = "";
+    const capital = Number(document.getElementById("capital").value);
+    const capital2 = Number(document.getElementById("cuota").value);
+    const capital3 = Number(document.getElementById("interes").value);
+
+    console.log("Capital:", capital);
+    console.log("Cuota:", capital2);
+    console.log("Interés:", capital3);
+
+    if (capital > 0) {
+        const tableRows = [];
+        let totalDeInteres = 0;
+
+        for (let i = 1; i <= capital2; i++) {
+            const cuota = capital / capital2;
+            const decimal1 = cuota.toFixed(2);
+            const interes2 = (capital * capital3) / 100 / capital2;
+            const decimal2 = interes2.toFixed(2);
+            const total = cuota + interes2;
+            const decimal3 = total.toFixed(2);
+
+            console.log(`Iteración ${i}: Cuota=${decimal1}, Interés=${decimal2}, Total=${decimal3}`);
+
+            tableRows.push(`
+                <tr>
+                    <td>${i}</td>
+                    <td>${decimal1}</td>
+                    <td>${decimal2}</td>
+                    <td>${decimal3}</td>
+                </tr>
+            `);
+
+            totalDeInteres += interes2;
         }
-        n1=n.toFixed(2);
-        t_i=i2*n2;
-        d4=t_i.toFixed(2);
-        t_p=r*n2;
-        d5=t_p.toFixed(2);
-        document.getElementById("t1").innerHTML=n1;
-        document.getElementById("t2").innerHTML=d4;
-        document.getElementById("t3").innerHTML=d5;        
-    }else{
+
+        const capital1 = capital.toFixed(2);
+        const decimal4 = totalDeInteres.toFixed(2);
+        const totalAPagar = (capital / capital2 + totalDeInteres) * capital2;
+        const decimal5 = totalAPagar.toFixed(2);
+
+        console.log("Total de Interés:", decimal4);
+        console.log("Total a Pagar:", decimal5);
+
+        document.getElementById("tab").innerHTML = tableRows.join("");
+
+        document.getElementById("total1").innerHTML = capital1;
+        document.getElementById("total2").innerHTML = decimal4;
+        document.getElementById("total3").innerHTML = decimal5;
+    } else {
         alert("Falta ingresar un Número");
     }
-}
+};
+
